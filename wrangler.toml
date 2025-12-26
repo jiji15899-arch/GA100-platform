@@ -2,7 +2,7 @@
 # 제작: 아백 (아로스)
 # 생성일: 2025-12-26
 
-name = "ga100-platform"
+name = "ga100"
 compatibility_date = "2025-12-26"
 
 [assets]

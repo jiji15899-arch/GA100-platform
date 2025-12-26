@@ -1,0 +1,457 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>마이홈 - GA100</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Noto Sans KR', sans-serif;
+            background: #f5f7fa;
+        }
+
+        header {
+            background: #fff;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+            padding: 1rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #2563eb;
+            text-decoration: none;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 2rem auto;
+            padding: 0 2rem;
+        }
+
+        .page-title {
+            font-size: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .tab-menu {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 2rem;
+            border-bottom: 2px solid #e5e7eb;
+            overflow-x: auto;
+        }
+
+        .tab {
+            padding: 1rem 1.5rem;
+            background: none;
+            border: none;
+            cursor: pointer;
+            font-size: 1rem;
+            color: #6b7280;
+            border-bottom: 3px solid transparent;
+            transition: all 0.3s;
+            white-space: nowrap;
+        }
+
+        .tab.active {
+            color: #2563eb;
+            border-bottom-color: #2563eb;
+            font-weight: 600;
+        }
+
+        .tab-content {
+            display: none;
+            background: #fff;
+            border-radius: 12px;
+            padding: 2rem;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        .stat-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .stat-card {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: #fff;
+            padding: 1.5rem;
+            border-radius: 12px;
+            text-align: center;
+        }
+
+        .stat-value {
+            font-size: 2rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+        }
+
+        .stat-label {
+            opacity: 0.9;
+            font-size: 0.9rem;
+        }
+
+        .course-item {
+            background: #f9fafb;
+            padding: 1.5rem;
+            border-radius: 8px;
+            margin-bottom: 1rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .course-info h3 {
+            margin-bottom: 0.5rem;
+            color: #1f2937;
+        }
+
+        .course-info p {
+            color: #6b7280;
+            font-size: 0.9rem;
+        }
+
+        .course-btn {
+            padding: 0.75rem 1.5rem;
+            background: #2563eb;
+            color: #fff;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+            color: #374151;
+        }
+
+        .form-group input {
+            width: 100%;
+            padding: 0.75rem;
+            border: 2px solid #e5e7eb;
+            border-radius: 8px;
+            font-size: 1rem;
+        }
+
+        .form-group input:focus {
+            outline: none;
+            border-color: #2563eb;
+        }
+
+        .btn {
+            padding: 0.75rem 1.5rem;
+            background: #2563eb;
+            color: #fff;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 1rem;
+        }
+
+        .btn-secondary {
+            background: #6b7280;
+        }
+
+        .empty-state {
+            text-align: center;
+            padding: 3rem;
+            color: #6b7280;
+        }
+
+        .empty-state h3 {
+            margin-bottom: 1rem;
+        }
+
+        .question-ticket {
+            background: linear-gradient(135deg, #fbbf24 0%, #f59e0b 100%);
+            color: #fff;
+            padding: 2rem;
+            border-radius: 12px;
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+
+        .question-ticket h3 {
+            font-size: 1.5rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .ticket-count {
+            font-size: 3rem;
+            font-weight: 700;
+            margin: 1rem 0;
+        }
+
+        .ticket-info {
+            background: rgba(255,255,255,0.2);
+            padding: 1rem;
+            border-radius: 8px;
+            margin-top: 1rem;
+            font-size: 0.9rem;
+        }
+
+        .message {
+            padding: 1rem;
+            border-radius: 8px;
+            margin-bottom: 1rem;
+        }
+
+        .message.success {
+            background: #d1fae5;
+            color: #065f46;
+        }
+
+        .message.error {
+            background: #fee2e2;
+            color: #991b1b;
+        }
+
+        @media (max-width: 768px) {
+            .course-item {
+                flex-direction: column;
+                gap: 1rem;
+                align-items: flex-start;
+            }
+
+            .stat-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <a href="index.html" class="logo">GA100</a>
+        <button class="btn btn-secondary" onclick="logout()">로그아웃</button>
+    </header>
+
+    <div class="container">
+        <h1 class="page-title">마이홈</h1>
+
+        <div class="tab-menu">
+            <button class="tab active" onclick="switchTab('class')">내 클래스</button>
+            <button class="tab" onclick="switchTab('earnings')">내 수익 현황</button>
+            <button class="tab" onclick="switchTab('secret')">시크릿 질문</button>
+            <button class="tab" onclick="switchTab('profile')">내 정보 수정</button>
+        </div>
+
+        <!-- 내 클래스 -->
+        <div class="tab-content active" id="class">
+            <h2 style="margin-bottom: 1.5rem;">수강 중인 강의</h2>
+            <div id="courseList"></div>
+        </div>
+
+        <!-- 내 수익 현황 -->
+        <div class="tab-content" id="earnings">
+            <h2 style="margin-bottom: 1.5rem;">내 포인트</h2>
+            <div class="stat-grid">
+                <div class="stat-card">
+                    <div class="stat-value" id="pointsValue">0</div>
+                    <div class="stat-label">보유 포인트</div>
+                </div>
+                <div class="stat-card" style="background: linear-gradient(135deg, #10b981 0%, #059669 100%);">
+                    <div class="stat-value" id="totalEarned">0</div>
+                    <div class="stat-label">누적 포인트</div>
+                </div>
+            </div>
+            <p style="color: #6b7280;">포인트는 강의 수강, 리뷰 작성, 커뮤니티 활동을 통해 획득할 수 있습니다.</p>
+        </div>
+
+        <!-- 시크릿 질문 -->
+        <div class="tab-content" id="secret">
+            <div class="question-ticket">
+                <h3>시크릿 질문권</h3>
+                <div class="ticket-count" id="ticketCount">0</div>
+                <p>보유 중인 질문권 개수</p>
+                <div class="ticket-info">
+                    <p>📝 강의 후기 작성: 1회 획득</p>
+                    <p>📢 커뮤니티 게시글 작성: 2회 획득</p>
+                    <p>💬 게시글 댓글 작성: 1회 획득</p>
+                </div>
+            </div>
+            <button class="btn" onclick="location.href='community.html?tab=secret'">시크릿 질문하러 가기</button>
+        </div>
+
+        <!-- 내 정보 수정 -->
+        <div class="tab-content" id="profile">
+            <div id="profileMessage"></div>
+            <form id="profileForm">
+                <div class="form-group">
+                    <label>현재 닉네임</label>
+                    <input type="text" id="currentNickname" readonly style="background: #f3f4f6;">
+                </div>
+                <div class="form-group">
+                    <label>새 닉네임</label>
+                    <input type="text" id="newNickname" placeholder="변경할 닉네임 입력">
+                </div>
+                <div class="form-group">
+                    <label>새 비밀번호</label>
+                    <input type="password" id="newPassword" placeholder="변경할 비밀번호 입력">
+                </div>
+                <div class="form-group">
+                    <label>새 비밀번호 확인</label>
+                    <input type="password" id="newPasswordConfirm" placeholder="비밀번호 다시 입력">
+                </div>
+                <button type="submit" class="btn">정보 수정</button>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        // 로그인 체크
+        const currentUser = localStorage.getItem('ga100_currentUser');
+        if (!currentUser) {
+            alert('로그인이 필요합니다.');
+            location.href = 'login.html';
+        }
+
+        // 사용자 데이터 로드
+        function loadUserData() {
+            const users = JSON.parse(localStorage.getItem('ga100_users') || '[]');
+            const user = users.find(u => u.nickname === currentUser);
+            return user;
+        }
+
+        // 탭 전환
+        function switchTab(tabName) {
+            document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+            document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
+            
+            event.target.classList.add('active');
+            document.getElementById(tabName).classList.add('active');
+
+            if (tabName === 'profile') {
+                document.getElementById('currentNickname').value = currentUser;
+            }
+        }
+
+        // 내 클래스 로드
+        function loadCourses() {
+            const user = loadUserData();
+            const courseList = document.getElementById('courseList');
+
+            if (!user || !user.courses || user.courses.length === 0) {
+                courseList.innerHTML = `
+                    <div class="empty-state">
+                        <h3>수강 중인 강의가 없습니다</h3>
+                        <p>새로운 강의를 시작해보세요!</p>
+                        <button class="btn" onclick="location.href='courses.html'" style="margin-top: 1rem;">강의 둘러보기</button>
+                    </div>
+                `;
+                return;
+            }
+
+            courseList.innerHTML = user.courses.map(course => `
+                <div class="course-item">
+                    <div class="course-info">
+                        <h3>${course.title}</h3>
+                        <p>수강 기간: ${course.enrollDate} ~ ${course.expiryDate || '평생'}</p>
+                    </div>
+                    <a href="course-detail.html?id=${course.id}" class="course-btn">학습하기</a>
+                </div>
+            `).join('');
+        }
+
+        // 포인트 로드
+        function loadEarnings() {
+            const user = loadUserData();
+            document.getElementById('pointsValue').textContent = user?.points || 0;
+            document.getElementById('totalEarned').textContent = user?.points || 0;
+        }
+
+        // 질문권 로드
+        function loadTickets() {
+            const user = loadUserData();
+            document.getElementById('ticketCount').textContent = user?.secretQuestions || 0;
+        }
+
+        // 프로필 수정
+        document.getElementById('profileForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+
+            const newNickname = document.getElementById('newNickname').value.trim();
+            const newPassword = document.getElementById('newPassword').value;
+            const newPasswordConfirm = document.getElementById('newPasswordConfirm').value;
+            const messageDiv = document.getElementById('profileMessage');
+
+            if (!newNickname && !newPassword) {
+                messageDiv.innerHTML = '<div class="message error">변경할 정보를 입력해주세요.</div>';
+                return;
+            }
+
+            if (newPassword && newPassword !== newPasswordConfirm) {
+                messageDiv.innerHTML = '<div class="message error">비밀번호가 일치하지 않습니다.</div>';
+                return;
+            }
+
+            const users = JSON.parse(localStorage.getItem('ga100_users') || '[]');
+            const userIndex = users.findIndex(u => u.nickname === currentUser);
+
+            if (userIndex === -1) {
+                messageDiv.innerHTML = '<div class="message error">사용자를 찾을 수 없습니다.</div>';
+                return;
+            }
+
+            // 동일한 닉네임/비밀번호 체크
+            if (newNickname) {
+                const existingNickname = users.find((u, i) => i !== userIndex && u.nickname === newNickname);
+                if (existingNickname) {
+                    messageDiv.innerHTML = '<div class="message error">이미 사용 중인 닉네임입니다.</div>';
+                    return;
+                }
+                users[userIndex].nickname = newNickname;
+                localStorage.setItem('ga100_currentUser', newNickname);
+            }
+
+            if (newPassword) {
+                const existingPassword = users.find((u, i) => i !== userIndex && u.password === newPassword);
+                if (existingPassword) {
+                    messageDiv.innerHTML = '<div class="message error">이미 사용 중인 비밀번호입니다.</div>';
+                    return;
+                }
+                users[userIndex].password = newPassword;
+            }
+
+            localStorage.setItem('ga100_users', JSON.stringify(users));
+            messageDiv.innerHTML = '<div class="message success">정보가 성공적으로 수정되었습니다!</div>';
+            
+            setTimeout(() => {
+                location.reload();
+            }, 1500);
+        });
+
+        // 로그아웃
+        function logout() {
+            if (confirm('로그아웃 하시겠습니까?')) {
+                localStorage.removeItem('ga100_currentUser');
+                location.href = 'index.html';
+            }
+        }
+
+        // 페이지 로드 시 데이터 로드
+        loadCourses();
+        loadEarnings();
+        loadTickets();
+    </script>
+</body>
+  </html>

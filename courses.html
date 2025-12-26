@@ -1,0 +1,434 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>전자책 - GA100</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Noto Sans KR', sans-serif;
+            background: #f5f7fa;
+        }
+
+        header {
+            background: #fff;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+            padding: 1rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #2563eb;
+            text-decoration: none;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 2rem auto;
+            padding: 0 2rem;
+        }
+
+        .page-header {
+            text-align: center;
+            padding: 3rem 0;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: #fff;
+            border-radius: 12px;
+            margin-bottom: 3rem;
+        }
+
+        .page-header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .course-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+
+        .course-card {
+            background: #fff;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+            transition: transform 0.3s, box-shadow 0.3s;
+            cursor: pointer;
+        }
+
+        .course-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 8px 24px rgba(0,0,0,0.15);
+        }
+
+        .course-image {
+            width: 100%;
+            height: 180px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 3rem;
+        }
+
+        .course-content {
+            padding: 1.5rem;
+        }
+
+        .course-title {
+            font-size: 1.3rem;
+            margin-bottom: 0.75rem;
+            color: #1f2937;
+        }
+
+        .course-desc {
+            color: #6b7280;
+            line-height: 1.6;
+            margin-bottom: 1rem;
+            font-size: 0.95rem;
+        }
+
+        .course-meta {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding-top: 1rem;
+            border-top: 1px solid #e5e7eb;
+        }
+
+        .course-price {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #2563eb;
+        }
+
+        .course-price.free {
+            color: #10b981;
+        }
+
+        .course-btn {
+            padding: 0.75rem 1.5rem;
+            background: #2563eb;
+            color: #fff;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            text-decoration: none;
+            font-size: 1rem;
+        }
+
+        .course-badge {
+            display: inline-block;
+            padding: 0.25rem 0.75rem;
+            background: #dbeafe;
+            color: #1e40af;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .course-badge.new {
+            background: #dcfce7;
+            color: #166534;
+        }
+
+        .empty-state {
+            text-align: center;
+            padding: 5rem 2rem;
+        }
+
+        .empty-state h2 {
+            color: #6b7280;
+            margin-bottom: 1rem;
+        }
+
+        .admin-section {
+            background: #fff;
+            border-radius: 12px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+        }
+
+        .admin-title {
+            font-size: 1.5rem;
+            margin-bottom: 1.5rem;
+            color: #1f2937;
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+            color: #374151;
+        }
+
+        .form-group input, .form-group textarea, .form-group select {
+            width: 100%;
+            padding: 0.75rem;
+            border: 2px solid #e5e7eb;
+            border-radius: 8px;
+            font-size: 1rem;
+        }
+
+        .form-group textarea {
+            min-height: 100px;
+            resize: vertical;
+        }
+
+        .btn {
+            padding: 0.75rem 1.5rem;
+            background: #2563eb;
+            color: #fff;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 1rem;
+        }
+
+        @media (max-width: 768px) {
+            .course-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .page-header h1 {
+                font-size: 2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <a href="index.html" class="logo">GA100</a>
+        <div>
+            <button class="btn" onclick="location.href='myhome.html'">마이홈</button>
+        </div>
+    </header>
+
+    <div class="container">
+        <div class="page-header">
+            <h1>📚 애드센스 전자책</h1>
+            <p>체계적인 학습으로 애드센스 수익 창출의 달인이 되어보세요</p>
+        </div>
+
+        <!-- 관리자 전용 강의 업로드 섹션 -->
+        <div id="adminSection" style="display: none;">
+            <div class="admin-section">
+                <h2 class="admin-title">🔧 강의 업로드 (관리자 전용)</h2>
+                <form id="courseUploadForm">
+                    <div class="form-group">
+                        <label>강의 제목</label>
+                        <input type="text" id="courseTitle" required>
+                    </div>
+                    <div class="form-group">
+                        <label>강의 설명</label>
+                        <textarea id="courseDesc" required></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label>가격 (0 입력 시 무료)</label>
+                        <input type="number" id="coursePrice" min="0" value="0" required>
+                    </div>
+                    <div class="form-group">
+                        <label>강의 카테고리</label>
+                        <select id="courseCategory">
+                            <option value="approval">애드센스 승인</option>
+                            <option value="revenue">수익 창출</option>
+                            <option value="optimization">수익 최적화</option>
+                            <option value="seo">SEO 전략</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>강의 콘텐츠 URL (GitHub 등)</label>
+                        <input type="url" id="courseContent" placeholder="https://...">
+                    </div>
+                    <button type="submit" class="btn">강의 업로드</button>
+                </form>
+            </div>
+        </div>
+
+        <!-- 강의 목록 -->
+        <div class="course-grid" id="courseGrid"></div>
+    </div>
+
+    <script>
+        // 샘플 강의 데이터
+        const defaultCourses = [
+            {
+                id: 'course1',
+                title: '애드센스 승인 완벽 가이드',
+                desc: '구글 애드센스 승인을 받기 위한 모든 조건과 실전 노하우를 담았습니다. 초보자도 쉽게 따라할 수 있는 단계별 가이드.',
+                price: 0,
+                category: 'approval',
+                icon: '📝',
+                isNew: true
+            },
+            {
+                id: 'course2',
+                title: '월 100만원 수익 창출 전략',
+                desc: '실제 애드센스로 월 100만원 이상 수익을 내는 전략과 노하우를 공개합니다. 광고 배치 최적화부터 트래픽 증가까지.',
+                price: 29000,
+                category: 'revenue',
+                icon: '💰',
+                isNew: false
+            },
+            {
+                id: 'course3',
+                title: 'SEO 완벽 마스터',
+                desc: '검색 엔진 최적화를 통한 자연 유입 트래픽 증가 전략. 키워드 리서치부터 백링크 구축까지 모든 것을 다룹니다.',
+                price: 19000,
+                category: 'seo',
+                icon: '🔍',
+                isNew: false
+            },
+            {
+                id: 'course4',
+                title: '고수익 니치 찾기',
+                desc: '수익성 높은 니치를 찾는 방법과 콘텐츠 전략. RPM을 극대화할 수 있는 니치 선정 노하우.',
+                price: 0,
+                category: 'optimization',
+                icon: '🎯',
+                isNew: true
+            }
+        ];
+
+        // 로컬 스토리지에 강의 데이터 초기화
+        if (!localStorage.getItem('ga100_courses')) {
+            localStorage.setItem('ga100_courses', JSON.stringify(defaultCourses));
+        }
+
+        // 강의 목록 로드
+        function loadCourses() {
+            const courses = JSON.parse(localStorage.getItem('ga100_courses') || '[]');
+            const courseGrid = document.getElementById('courseGrid');
+
+            if (courses.length === 0) {
+                courseGrid.innerHTML = `
+                    <div class="empty-state">
+                        <h2>아직 등록된 강의가 없습니다</h2>
+                        <p>곧 새로운 강의가 추가될 예정입니다!</p>
+                    </div>
+                `;
+                return;
+            }
+
+            courseGrid.innerHTML = courses.map(course => `
+                <div class="course-card" onclick="viewCourse('${course.id}')">
+                    <div class="course-image">${course.icon}</div>
+                    <div class="course-content">
+                        ${course.isNew ? '<span class="course-badge new">NEW</span>' : ''}
+                        <h3 class="course-title">${course.title}</h3>
+                        <p class="course-desc">${course.desc}</p>
+                        <div class="course-meta">
+                            <div class="course-price ${course.price === 0 ? 'free' : ''}">
+                                ${course.price === 0 ? '무료' : course.price.toLocaleString() + '원'}
+                            </div>
+                            <button class="course-btn" onclick="event.stopPropagation(); enrollCourse('${course.id}')">
+                                ${course.price === 0 ? '바로 시작' : '수강 신청'}
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        // 강의 상세 보기
+        function viewCourse(courseId) {
+            location.href = `course-detail.html?id=${courseId}`;
+        }
+
+        // 강의 신청
+        function enrollCourse(courseId) {
+            const currentUser = localStorage.getItem('ga100_currentUser');
+            
+            if (!currentUser) {
+                alert('로그인이 필요합니다.');
+                location.href = 'login.html';
+                return;
+            }
+
+            const courses = JSON.parse(localStorage.getItem('ga100_courses') || '[]');
+            const course = courses.find(c => c.id === courseId);
+
+            if (!course) return;
+
+            const users = JSON.parse(localStorage.getItem('ga100_users') || '[]');
+            const userIndex = users.findIndex(u => u.nickname === currentUser);
+
+            if (userIndex === -1) return;
+
+            // 이미 수강 중인지 확인
+            if (!users[userIndex].courses) users[userIndex].courses = [];
+            
+            const alreadyEnrolled = users[userIndex].courses.some(c => c.id === courseId);
+            if (alreadyEnrolled) {
+                alert('이미 수강 중인 강의입니다.');
+                return;
+            }
+
+            // 무료 강의는 바로 등록
+            if (course.price === 0) {
+                users[userIndex].courses.push({
+                    id: courseId,
+                    title: course.title,
+                    enrollDate: new Date().toISOString().split('T')[0],
+                    expiryDate: null
+                });
+                localStorage.setItem('ga100_users', JSON.stringify(users));
+                alert('강의 신청이 완료되었습니다!');
+                location.href = 'myhome.html';
+            } else {
+                alert('유료 강의는 결제 시스템 연동 후 이용 가능합니다.');
+            }
+        }
+
+        // 관리자 권한 체크
+        function checkAdmin() {
+            const currentUser = localStorage.getItem('ga100_currentUser');
+            const adminUsers = ['admin', '관리자', 'ga100admin'];
+            
+            if (adminUsers.includes(currentUser)) {
+                document.getElementById('adminSection').style.display = 'block';
+            }
+        }
+
+        // 강의 업로드 (관리자)
+        document.getElementById('courseUploadForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+
+            const newCourse = {
+                id: 'course' + Date.now(),
+                title: document.getElementById('courseTitle').value,
+                desc: document.getElementById('courseDesc').value,
+                price: parseInt(document.getElementById('coursePrice').value),
+                category: document.getElementById('courseCategory').value,
+                icon: '📚',
+                isNew: true,
+                contentUrl: document.getElementById('courseContent').value
+            };
+
+            const courses = JSON.parse(localStorage.getItem('ga100_courses') || '[]');
+            courses.unshift(newCourse);
+            localStorage.setItem('ga100_courses', JSON.stringify(courses));
+
+            alert('강의가 성공적으로 업로드되었습니다!');
+            this.reset();
+            loadCourses();
+        });
+
+        // 페이지 로드
+        loadCourses();
+        checkAdmin();
+    </script>
+</body>
+  </html>
